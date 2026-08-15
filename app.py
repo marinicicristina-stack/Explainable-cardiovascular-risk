@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from src.predict import predict_heart_disease
-
+from src.predict import predict_heart_disease, explain_prediction
 
 # Page configuration
 # Configuration de la page
@@ -151,6 +150,7 @@ if st.button("Predict Heart Disease", type="primary"):
     }
 
     result = predict_heart_disease(patient_data)
+    explanation = explain_prediction(patient_data)
 
     predicted_class = result["predicted_class"]
     probability = result["heart_disease_probability"]
@@ -171,3 +171,73 @@ if st.button("Predict Heart Disease", type="primary"):
         "The displayed probability is the output of the machine learning "
         "model and should not be interpreted as a clinical diagnosis."
     )
+    
+st.divider()
+
+st.header("Model Explanation")
+
+st.write(
+    """
+    SHAP values show how each clinical feature influenced the model output
+    for this patient.
+    """
+)
+
+# Separate positive and negative contributions
+# Séparer les contributions positives et négatives
+
+positive_contributions = {
+    feature: value
+    for feature, value in explanation.items()
+    if value > 0
+}
+
+negative_contributions = {
+    feature: value
+    for feature, value in explanation.items()
+    if value < 0
+}
+
+# Sort contributions by absolute importance
+# Trier les contributions par importance absolue
+
+positive_contributions = dict(
+    sorted(
+        positive_contributions.items(),
+        key=lambda item: abs(item[1]),
+        reverse=True
+    )
+)
+
+negative_contributions = dict(
+    sorted(
+        negative_contributions.items(),
+        key=lambda item: abs(item[1]),
+        reverse=True
+    )
+)
+
+col_positive, col_negative = st.columns(2)
+
+with col_positive:
+    st.subheader("Factors pushing toward Heart Disease")
+
+    if positive_contributions:
+        for feature, value in list(positive_contributions.items())[:5]:
+            st.write(f"**{feature}**: +{value:.3f}")
+    else:
+        st.write("No positive contributions.")
+
+with col_negative:
+    st.subheader("Factors pushing toward No Heart Disease")
+
+    if negative_contributions:
+        for feature, value in list(negative_contributions.items())[:5]:
+            st.write(f"**{feature}**: {value:.3f}")
+    else:
+        st.write("No negative contributions.")
+
+st.caption(
+    "SHAP values explain the behavior of the machine learning model. "
+    "They do not represent causal medical effects."
+)
