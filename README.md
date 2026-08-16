@@ -89,6 +89,11 @@ This makes the prediction more transparent and allows users to understand the be
 SHAP values describe the behavior of the model and should not be interpreted as causal medical effects.
 
 ---
+### Live Application
+
+The deployed application is available online:
+
+[Launch the Cardiovascular Risk Prediction Application](https://marinicicristina-stack-explainable-cardiovascular-ri-app-tjefl5.streamlit.app/)
 
 ## Web Application
 
