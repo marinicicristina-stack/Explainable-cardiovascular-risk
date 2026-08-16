@@ -261,8 +261,8 @@ with col_negative:
 
 shap_df = pd.DataFrame({
     "Feature": [
-        FEATURE_LABELS.get(feature, feature)
-        for feature in explanation.keys()
+    CHART_LABELS.get(feature, feature)
+    for feature in explanation.keys()
     ],
     "SHAP Value": list(explanation.values())
 })
