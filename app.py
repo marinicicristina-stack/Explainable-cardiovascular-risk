@@ -256,6 +256,33 @@ with col_negative:
     else:
         st.write("No negative contributions.")
 
+# Prepare SHAP contributions for visualization
+# Préparer les contributions SHAP pour la visualisation
+
+shap_df = pd.DataFrame({
+    "Feature": [
+        FEATURE_LABELS.get(feature, feature)
+        for feature in explanation.keys()
+    ],
+    "SHAP Value": list(explanation.values())
+})
+
+# Sort by absolute SHAP importance
+# Trier par importance absolue des valeurs SHAP
+shap_df["Absolute SHAP"] = shap_df["SHAP Value"].abs()
+
+shap_df = shap_df.sort_values(
+    "Absolute SHAP",
+    ascending=False
+).head(8)
+
+st.subheader("SHAP Contribution Overview")
+
+st.bar_chart(
+    shap_df.set_index("Feature")["SHAP Value"],
+    horizontal=True
+)
+
 st.caption(
     "SHAP values explain the behavior of the machine learning model. "
     "They do not represent causal medical effects."
