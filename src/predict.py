@@ -24,8 +24,6 @@ FEATURES = [
     "ca",
     "thal"
 ]
-
-
 def predict_heart_disease(patient_data):
     """
     Predict heart disease for one patient.
@@ -50,7 +48,9 @@ def predict_heart_disease(patient_data):
         "predicted_class": predicted_class,
         "heart_disease_probability": round(probability, 3)
     }
-    def explain_prediction(patient_data):
+
+
+def explain_prediction(patient_data):
     """
     Explain the prediction for one patient using SHAP.
 
@@ -81,3 +81,4 @@ def predict_heart_disease(patient_data):
     }
 
     return explanation
+
