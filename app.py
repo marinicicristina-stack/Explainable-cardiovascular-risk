@@ -127,7 +127,24 @@ with col2:
 
 
 st.divider()
+# Human-readable feature names
+# Noms lisibles des variables
 
+FEATURE_LABELS = {
+    "age": "Age",
+    "sex": "Sex",
+    "cp": "Chest Pain Type (cp)",
+    "trestbps": "Resting Blood Pressure",
+    "chol": "Serum Cholesterol",
+    "fbs": "Fasting Blood Sugar",
+    "restecg": "Resting ECG Result",
+    "thalach": "Maximum Heart Rate Achieved",
+    "exang": "Exercise-Induced Angina",
+    "oldpeak": "ST Depression (oldpeak)",
+    "slope": "Slope of Peak Exercise ST Segment",
+    "ca": "Number of Major Vessels (ca)",
+    "thal": "Thal"
+}
 
 # Run prediction
 # Exécuter la prédiction
@@ -224,7 +241,8 @@ with col_positive:
 
     if positive_contributions:
         for feature, value in list(positive_contributions.items())[:5]:
-            st.write(f"**{feature}**: +{value:.3f}")
+            label = FEATURE_LABELS.get(feature, feature)
+            st.write(f"**{label}**: +{value:.3f}")
     else:
         st.write("No positive contributions.")
 
@@ -233,7 +251,8 @@ with col_negative:
 
     if negative_contributions:
         for feature, value in list(negative_contributions.items())[:5]:
-            st.write(f"**{feature}**: {value:.3f}")
+            label = FEATURE_LABELS.get(feature, feature)
+            st.write(f"**{label}**: {value:.3f}")
     else:
         st.write("No negative contributions.")
 
