@@ -145,6 +145,24 @@ FEATURE_LABELS = {
     "ca": "Number of Major Vessels (ca)",
     "thal": "Thal"
 }
+# Short feature names for the SHAP chart
+# Noms courts pour le graphique SHAP
+
+CHART_LABELS = {
+    "age": "Age",
+    "sex": "Sex",
+    "cp": "Chest Pain",
+    "trestbps": "Blood Pressure",
+    "chol": "Cholesterol",
+    "fbs": "Fasting Blood Sugar",
+    "restecg": "Resting ECG",
+    "thalach": "Max Heart Rate",
+    "exang": "Exercise Angina",
+    "oldpeak": "ST Depression",
+    "slope": "ST Slope",
+    "ca": "Major Vessels",
+    "thal": "Thal"
+}
 
 # Run prediction
 # Exécuter la prédiction
